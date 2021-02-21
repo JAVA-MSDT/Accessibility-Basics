@@ -47,6 +47,15 @@
             <li role="none">
                 <a role="menuitem" class="dropdown-item" href="#" type="button">Something else here</a>
             </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Another action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Something else here</a>
+            </li>
         </ul>
     </div>
 
@@ -122,6 +131,7 @@
             const ANCHOR_TAG = "A";
             const CLASS_SHOW = "show";
             const KEYDOWN_FUNCTION = "keydown";
+            const CLICK_FUNCTION = "click";
             const ARIA_EXPANDED = "aria-expanded";
             const ARIA_LABEL_MOCK = "ariaLabelMock";
             const MENU_LABEL_ID = "menuLabel";
@@ -135,8 +145,7 @@
                 UP: 38,
                 DOWN: 40
             };
-
-            previouFocusedElement = document.activeElement;
+            var firstChars = [];
             var menuButton = document.getElementById(triggerElementId); // Currently not used, but in case in the future we wanted to manipulate it
             var Container = document.getElementById(targetedElementId);
             var mainContainerMenu = document.getElementById(mainContainberMenuId);
@@ -166,13 +175,7 @@
                         prevent(e);
                         break;
                     case KEY_BUTTON.DOWN:
-                        firstMenuElement.focus();
-                        prevent(e);
-                        break;
                     case KEY_BUTTON.SPACE:
-                        firstMenuElement.focus();
-                        prevent(e);
-                        break;
                     case KEY_BUTTON.ENTER:
                         firstMenuElement.focus();
                         prevent(e);
@@ -185,7 +188,7 @@
             }
 
             // to close the menu in case the mouse clicked outside the menu
-            document.addEventListener('click', handleMouseClickOutOfMenu);
+            document.addEventListener(CLICK_FUNCTION, handleMouseClickOutOfMenu);
 
             // handling the keyboard buttons when it is fired on menu items
             Container.addEventListener(KEYDOWN_FUNCTION, handleKeydown);
@@ -242,6 +245,9 @@
                         prevent(event);
                         break;
                 }
+                if (isPrintableCharacter(event.key) && document.activeElement.tagName === ANCHOR_TAG) {
+                    setFocusByFirstCharacter(focusableElements, document.activeElement, event.key);
+                }
 
             };
             // handling closing the menu
@@ -291,10 +297,56 @@
                 });
                 if (clickedOnMenuElement === 0) {
                     closeMenu();
-                    document.removeEventListener('click', handleMouseClickOutOfMenu);
+                    document.removeEventListener(CLICK_FUNCTION, handleMouseClickOutOfMenu);
                 }
             }
+            // Check if it is a printable Characters
+            function isPrintableCharacter(str) {
+                return str.length === 1 && str.match(/\S/);
+            }
+        }
 
+        // Handling Focus using keyboards Characters
+        function setFocusByFirstCharacter(focusableElements, currentItem, char) {
+            var firstChars = [];
+            var start, index, char = char.toLowerCase();
+
+            var elementTextContent;
+            for (var index = 0; index < focusableElements.length; index++) {
+                elementTextContent = focusableElements[index].textContent.trim();
+                firstChars.push(elementTextContent.substring(0, 1).toLowerCase());
+            }
+
+            // Get start index for search based on position of currentItem
+            start = focusableElements.indexOf(currentItem) + 1;
+            if (start === focusableElements.length) {
+                start = 0;
+            }
+            console.log("Curent Item Index:: " + start)
+                // Check remaining slots in the menu
+            index = getIndexFirstChars(start, char);
+
+            console.log("Curent index:: " + index)
+                // If not found in remaining slots, check from beginning
+            if (index === -1) {
+                index = getIndexFirstChars(0, char);
+            }
+
+            // If match was found...
+            if (index > -1) {
+                focusableElements[index].focus();
+            }
+
+            // function setFocusByFirstCharacter(currentItem, char) { };
+
+            function getIndexFirstChars(startIndex, char) {
+                for (var i = startIndex; i < firstChars.length; i++) {
+                    if (char === firstChars[i]) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
         }
     </script>
 
