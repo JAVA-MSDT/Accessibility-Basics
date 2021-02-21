@@ -30,10 +30,14 @@
 
     <h2> Drop Down Menu Without any Input Fields</h2>
     <div id="mainContainberMenu" class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeydown="openmenu(event,'targetedElementId', 'dropdownMenu2', 'mainContainberMenu')">
+        <label id="menuLabel"> Display </label>
+        <!-- "ariaLabelMock" because of This is a custom menu so for Screen reader to read the visual label and the value of the dropdown button when it is changed Dynamically -->
+        <p id="ariaLabelMock" class="sr-only"></p>
+        <br>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" aria-labelledby="ariaLabelMock" onfocus="readMenuValue(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeydown="openmenu(event,'targetedElementId', 'dropdownMenu2', 'mainContainberMenu')">
           Dropdown
         </button>
-        <ul role="menu" id="targetedElementId" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <ul role="menu" id="targetedElementId" class="dropdown-menu">
             <li role="none">
                 <a role="menuitem" class="dropdown-item" href="#" type="button">Action</a>
             </li>
@@ -50,7 +54,7 @@
     <h2> Drop Down Menu with first element as Input Field</h2>
 
     <div id="mainContainberMenuId" class="menu_button dropdown">
-        <label for="menubutton"> Custom Menu Button </label>
+        <label for=""> Custom Menu Button </label>
         <br>
         <button onkeydown="openmenu(event,'menuList', 'menubutton', 'mainContainberMenuId')" id="menubutton" aria-haspopup="true" aria-controls="menuList" aria-expanded="false" data-toggle="dropdown" class="btn btn-success dropdown-toggle">
           WAI-ARIA Quick Links
@@ -98,6 +102,20 @@
     <a href="#">Just focus</a>
 
     <script type="text/javascript">
+        function readMenuValue(element) {
+
+            const ARIA_LABEL_MOCK = "ariaLabelMock";
+            const MENU_LABEL_ID = "menuLabel";
+
+            var element = element;
+            var menuLabel = document.getElementById(MENU_LABEL_ID);
+            var menuLabelText = menuLabel.textContent;
+            var ariaLabelMock = document.getElementById(ARIA_LABEL_MOCK);
+
+            ariaLabelMock.textContent = menuLabelText + " " + element.textContent;
+
+        }
+
         function openmenu(e, targetedElementId, triggerElementId, mainContainberMenuId) {
 
             const FOCASABLE_ELEMENTS = 'a[href], button:not([disabled]), input:not([disabled])';
@@ -105,6 +123,8 @@
             const CLASS_SHOW = "show";
             const KEYDOWN_FUNCTION = "keydown";
             const ARIA_EXPANDED = "aria-expanded";
+            const ARIA_LABEL_MOCK = "ariaLabelMock";
+            const MENU_LABEL_ID = "menuLabel";
             const KEY_BUTTON = {
                 TAB: 9,
                 ENTER: 13,
@@ -121,6 +141,10 @@
             var Container = document.getElementById(targetedElementId);
             var mainContainerMenu = document.getElementById(mainContainberMenuId);
 
+            var menuLabel = document.getElementById(MENU_LABEL_ID);
+            var menuLabelText = menuLabel.textContent;
+            var ariaLabelMock = document.getElementById(ARIA_LABEL_MOCK);
+
             var focusableElements = Container.querySelectorAll(FOCASABLE_ELEMENTS);
             focusableElements = Array.prototype.slice.call(focusableElements);
 
@@ -134,6 +158,8 @@
                 isMenuOpened = true;
                 mainContainerMenu.classList.add(CLASS_SHOW);
                 Container.classList.add(CLASS_SHOW);
+                menuButton.setAttribute(ARIA_EXPANDED, true)
+
                 switch (e.keyCode) {
                     case KEY_BUTTON.UP:
                         lastMenuElement.focus();
@@ -201,6 +227,7 @@
                         break;
                     case KEY_BUTTON.ENTER:
                         if (document.activeElement.tagName === ANCHOR_TAG) {
+                            ariaLabelMock.textContent = menuLabelText + " " + document.activeElement.textContent;
                             menuButton.textContent = document.activeElement.textContent;
                             document.activeElement.click();
                             closeMenu();
@@ -264,6 +291,7 @@
                 });
                 if (clickedOnMenuElement === 0) {
                     closeMenu();
+                    document.removeEventListener('click', handleMouseClickOutOfMenu);
                 }
             }
 
