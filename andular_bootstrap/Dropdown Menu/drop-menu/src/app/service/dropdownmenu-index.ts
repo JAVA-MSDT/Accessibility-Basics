@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { KEY_BUTTON } from '../util/keyboard-buttons';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,18 +17,6 @@ export class DropdownAccessiblity {
     const CLASS_SHOW = 'show';
     const ARIA_EXPANDED = 'aria-expanded';
     const KEY_DOWN = 'keydown';
-    const KEY_BUTTON = Object.freeze({
-      TAB: 9,
-      RETURN: 13,
-      ESC: 27,
-      SPACE: 32,
-      PAGEUP: 33,
-      PAGEDOWN: 34,
-      END: 35,
-      HOME: 36,
-      UP: 38,
-      DOWN: 40,
-    });
 
     let currentIndex: number;
     let menuContainerelement: any = document.getElementById(menuContainer);
