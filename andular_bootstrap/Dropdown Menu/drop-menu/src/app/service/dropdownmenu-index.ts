@@ -19,13 +19,23 @@ export class DropdownAccessiblity {
     const KEY_DOWN = 'keydown';
 
     let currentIndex: number;
-    let menuContainerelement: any = document.getElementById(menuContainer);
-    let menuButtonElement: any = document.getElementById(menuBtn);
-    let menuListElement: any = document.getElementById(menuList);
-    let menuItemsElements: any = document.getElementsByClassName(menuItems);
+    let menuContainerelement: HTMLElement = document.getElementById(
+      menuContainer
+    ) as HTMLElement;
 
-    let firstMenuElement: any = menuItemsElements[0];
-    let lastMenuElement: any = menuItemsElements[menuItemsElements.length - 1];
+    let menuButtonElement: HTMLElement = document.getElementById(
+      menuBtn
+    ) as HTMLElement;
+    let menuListElement: HTMLElement = document.getElementById(
+      menuList
+    ) as HTMLElement;
+    let menuItemsElements: HTMLCollectionOf<Element> =
+      document.getElementsByClassName(menuItems);
+
+    let firstMenuElement: HTMLElement = menuItemsElements[0] as HTMLElement;
+    let lastMenuElement: any = menuItemsElements[
+      menuItemsElements.length - 1
+    ] as HTMLElement;
 
     const setElementFocus = (targetedIndex: number) => {
       if (targetedIndex == menuItemsElements.length) {
@@ -33,15 +43,15 @@ export class DropdownAccessiblity {
       } else if (targetedIndex < 0) {
         targetedIndex = menuItemsElements.length - 1;
       }
-      menuItemsElements[targetedIndex].focus();
+      (menuItemsElements[targetedIndex] as HTMLElement)?.focus();
       currentIndex = targetedIndex;
     };
 
-    const handleMenuButton = function (event: any) {
+    const handleMenuButton = (event: KeyboardEvent): void => {
       switch (event.keyCode) {
         case KEY_BUTTON.UP:
           openMenu();
-          menuItemsElements[menuItemsElements.length - 1].focus();
+          lastMenuElement.focus();
           currentIndex = menuItemsElements.length - 1;
           prevent(event);
           break;
@@ -49,7 +59,7 @@ export class DropdownAccessiblity {
         case KEY_BUTTON.SPACE:
         case KEY_BUTTON.RETURN:
           openMenu();
-          menuItemsElements[0].focus();
+          firstMenuElement.focus();
           currentIndex = 0;
           prevent(event);
           break;
@@ -60,7 +70,7 @@ export class DropdownAccessiblity {
       }
     };
 
-    function handleMenuListKeydown(event: any) {
+    const handleMenuListKeydown = (event: KeyboardEvent): void => {
       switch (event.keyCode) {
         case KEY_BUTTON.TAB:
           if (event.shiftKey) {
@@ -92,11 +102,9 @@ export class DropdownAccessiblity {
           prevent(event);
           break;
         case KEY_BUTTON.RETURN:
-          if (document.activeElement !== null) {
-            menuButtonElement.textContent = document.activeElement.textContent;
-            closeMenu();
-            prevent(event);
-          }
+          (menuItemsElements[currentIndex] as HTMLElement)?.click();
+          closeMenu();
+          prevent(event);
           break;
         case KEY_BUTTON.ESC:
           closeMenu();
@@ -106,29 +114,29 @@ export class DropdownAccessiblity {
           prevent(event);
           break;
       }
-    }
+    };
 
-    const prevent = (event: any) => {
+    const prevent = (event: KeyboardEvent): void => {
       event.preventDefault();
       event.stopPropagation();
       event.cancelBubble = true;
       event.returnValue = false;
     };
 
-    const openMenu = () => {
+    const openMenu = (): void => {
       menuContainerelement.classList.add(CLASS_SHOW);
       menuListElement.classList.add(CLASS_SHOW);
       menuListElement.removeAttribute(STYLE_ATTRIBUTE);
       menuListElement.setAttribute(STYLE_ATTRIBUTE, styleOpen);
-      menuButtonElement.setAttribute(ARIA_EXPANDED, true);
+      menuButtonElement.setAttribute(ARIA_EXPANDED, 'true');
     };
 
-    const closeMenu = () => {
+    const closeMenu = (): void => {
       menuContainerelement.classList.remove(CLASS_SHOW);
       menuListElement.classList.remove(CLASS_SHOW);
       menuListElement.removeAttribute(STYLE_ATTRIBUTE);
       menuListElement.setAttribute(STYLE_ATTRIBUTE, styleClose);
-      menuButtonElement.setAttribute(ARIA_EXPANDED, false);
+      menuButtonElement.setAttribute(ARIA_EXPANDED, 'false');
       menuButtonElement.focus();
     };
 
