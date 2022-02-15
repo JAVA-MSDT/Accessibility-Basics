@@ -88,6 +88,52 @@
           </div>
         </div>
       </div>
+      <br />
+      <div class="row">
+        <h2 class="border p-2 mb-5">Dynamic content recommendations</h2>
+        <h3>Dynamic content  alets, Spinner , etc:</h3>
+        <ul>
+          <li>
+            Use role=“role of the content”, to announce the new information
+          </li>
+          <li>Use aria-live="polite“ in case this is not a critical information
+          </li>
+        </ul>
+        <hr />
+        <div class="col-6">
+          <div id="dynamic-content">
+            <div>
+              <button
+                id="btn-toggle"
+                class="btn btn-success"
+                onclick="triggerDynamic()"
+              >
+                Display / Hide Dynamic content
+              </button>
+            </div>
+            <br />
+            <div id="dynamic-container"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div id="dynamic-spinner">
+            <div>
+              <button
+                id="spinner-toggle"
+                class="btn btn-info"
+                onclick="triggerSpinner()"
+              >
+                Display / Hide Spinner
+              </button>
+            </div>
+            <br />
+            <div role="" id="spinner-container"></div>
+                      </div>
+                   <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -98,6 +144,59 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script>
+      // Alert Area //
+      let toggleAlert = false;
+
+      function triggerDynamic() {
+        const dynamicContainer = document.getElementById("dynamic-container");
+        const span = document.createElement("SPAN");
+        toggleAlert = !toggleAlert;
+        span.id = "dynamic-span";
+        span.setAttribute("class", "alert alert-danger");
+        span.setAttribute("role", "alert");
+        span.setAttribute("aria-live", "polite");
+        span.textContent = "Dynamic Span contanet";
+
+        if (toggleAlert) {
+          dynamicContainer.appendChild(span);
+        } else {
+          const spanEle = document.getElementById("dynamic-span");
+          if (spanEle) {
+            spanEle.remove();
+          }
+        }
+      }
+
+      // Spinner Area //
+      let toggleSpinner = false;
+      const spinnerContainer = document.getElementById("spinner-container");
+      const div = document.createElement("DIV");
+      const span = document.createElement("SPAN");
+      function triggerSpinner() {
+        toggleSpinner = !toggleSpinner;
+        div.id = "spinner-div";
+        div.setAttribute("class", "spinner-border");
+        div.setAttribute("role", "alert");
+        div.setAttribute("aria-live", "polite");
+       // div.setAttribute("aria-label", "Loading .....");
+
+        span.id = "span-spinner";
+        span.setAttribute("class", "visually-hidden");
+        span.textContent = "Loading .....";
+
+        div.appendChild(span);
+
+        if (toggleSpinner) {
+          spinnerContainer.appendChild(div);
+        } else {
+          const divEle = document.getElementById("spinner-div");
+          if (divEle) {
+            divEle.remove();
+          }
+        }
+      }
+    </script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
