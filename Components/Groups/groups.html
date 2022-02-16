@@ -58,7 +58,7 @@
             aria-describedby="username-tip"
             required
           />
-          <p id="username-tip ">Username should be …….</p>
+          <p id="username-tip">Username should be …….</p>
           <br />
           <label class="form-label fs-4 fw-bold" id="password-label"
             >Your Password</label
@@ -71,7 +71,7 @@
             aria-describedby="password-tip"
             required
           />
-          <p id="password-tip ">Password should be …….</p>
+          <p id="password-tip">Password should be …….</p>
         </div>
       </div>
 
@@ -119,21 +119,25 @@
               Checkboxes Group
             </label>
           </div>
-          <div role="group" aria-labelledby="id-checkbox-label">
-            <ul class="checkboxes">
-              <li role="none">
+          <div>
+            <ul
+            role="group"
+              aria-labelledby="id-checkbox-label"
+              class="checkboxes"
+            >
+              <li role="presentation">
                 <input type="checkbox" class="checkbox" id="btncheck1" />
                 <label class="label" for="btncheck1">Checkbox 1</label>
               </li>
-              <li role="none">
+              <li role="presentation">
                 <input type="checkbox" class="checkbox" id="btncheck2" />
                 <label class="label" for="btncheck2">Checkbox 2</label>
               </li>
-              <li role="none">
+              <li role="presentation">
                 <input type="checkbox" class="checkbox" id="btncheck3" />
                 <label class="label" for="btncheck3">Checkbox 3</label>
               </li>
-              <li role="none">
+              <li role="presentation">
                 <input type="checkbox" class="checkbox" id="btncheck4" />
                 <label class="label" for="btncheck4">Checkbox 4</label>
               </li>
@@ -183,12 +187,12 @@
             </label>
           </div>
           <div class="bd-example">
-            <div
-              class="btn-group-vertical"
-              role="radiogroup"
-              aria-labelledby="id-radio-label"
-            >
-              <ul class="radiobuttons">
+            <div class="btn-group-vertical">
+              <ul
+                role="radiogroup"
+                aria-labelledby="id-radio-label"
+                class="radiobuttons"
+              >
                 <li role="presentation">
                   <input
                     type="radio"
