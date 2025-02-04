@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drop Down menu Accessibility</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Angular Js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1> Drop down Menu For Accessibility </h1>
+    <p> Implementing of simple Drop Down Meue for Accessibility using bootstrap</p>
+    <p>For more info about Drop down menu Button visit the follwoin glink</p>
+    <a target="blank" href="https://www.w3.org/TR/2019/NOTE-wai-aria-practices-1.1-20190814/examples/menu-button/menu-button-links.html">Navigation Menu Button Example</a>
+    <hr>
+
+    <h2> Drop Down Menu Without any Input Fields</h2>
+    <div id="mainContainberMenu" class="dropdown">
+        <label id="menuLabel"> Display </label>
+        <!-- "ariaLabelMock" because of This is a custom menu so for Screen reader to read the visual label and the value of the dropdown button when it is changed Dynamically -->
+        <p id="ariaLabelMock" class="sr-only"></p>
+        <br>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" aria-labelledby="ariaLabelMock" onfocus="readMenuValue(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onkeydown="openmenu(event,'targetedElementId', 'dropdownMenu2', 'mainContainberMenu')">
+          Dropdown
+        </button>
+        <ul role="menu" id="targetedElementId" class="dropdown-menu">
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Another action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Something else here</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Another action</a>
+            </li>
+            <li role="none">
+                <a role="menuitem" class="dropdown-item" href="#" type="button">Something else here</a>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+    <h2> Drop Down Menu with first element as Input Field</h2>
+
+    <div id="mainContainberMenuId" class="menu_button dropdown">
+        <label for=""> Custom Menu Button </label>
+        <br>
+        <button onkeydown="openmenu(event,'menuList', 'menubutton', 'mainContainberMenuId')" id="menubutton" aria-haspopup="true" aria-controls="menuList" aria-expanded="false" data-toggle="dropdown" class="btn btn-success dropdown-toggle">
+          WAI-ARIA Quick Links
+        </button>
+        <ul id="menuList" role="menu" aria-labelledby="menubutton" class="dropdown-menu">
+            <li role="none">
+                <div class="searchComp stopPropogation">
+                    <input type="text" class="form-control" id="searchId" autocomplete="off" placeholder="search" />
+                </div>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/">
+              W3C Home Page
+            </a>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/standards/webdesign/accessibility">
+              W3C Web Accessibility Initiative
+            </a>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/TR/wai-aria/">
+              Accessible Rich Internet Application Specification
+            </a>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/TR/wai-aria-practices/">
+              WAI-ARIA Authoring Practices
+            </a>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/TR/wai-aria-implementation/">
+              WAI-ARIA Implementation Guide
+            </a>
+            </li>
+            <li role="none">
+                <a target="blank" class="dropdown-item" role="menuitem" href="https://www.w3.org/TR/accname-aam-1.1/">
+              Accessible Name and Description
+            </a>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <br>
+    <a href="#">Just focus</a>
+
+    <script type="text/javascript">
+        function readMenuValue(element) {
+
+            const ARIA_LABEL_MOCK = "ariaLabelMock";
+            const MENU_LABEL_ID = "menuLabel";
+
+            var element = element;
+            var menuLabel = document.getElementById(MENU_LABEL_ID);
+            var menuLabelText = menuLabel.textContent;
+            var ariaLabelMock = document.getElementById(ARIA_LABEL_MOCK);
+
+            ariaLabelMock.textContent = menuLabelText + " " + element.textContent;
+
+        }
+
+        function openmenu(e, targetedElementId, triggerElementId, mainContainberMenuId) {
+
+            const FOCASABLE_ELEMENTS = 'a[href], button:not([disabled]), input:not([disabled])';
+            const ANCHOR_TAG = "A";
+            const CLASS_SHOW = "show";
+            const KEYDOWN_FUNCTION = "keydown";
+            const CLICK_FUNCTION = "click";
+            const ARIA_EXPANDED = "aria-expanded";
+            const ARIA_LABEL_MOCK = "ariaLabelMock";
+            const MENU_LABEL_ID = "menuLabel";
+            const KEY_BUTTON = {
+                TAB: 9,
+                ENTER: 13,
+                ESC: 27,
+                SPACE: 32,
+                END: 35,
+                HOME: 36,
+                UP: 38,
+                DOWN: 40
+            };
+            var firstChars = [];
+            var menuButton = document.getElementById(triggerElementId); // Currently not used, but in case in the future we wanted to manipulate it
+            var Container = document.getElementById(targetedElementId);
+            var mainContainerMenu = document.getElementById(mainContainberMenuId);
+
+            var menuLabel = document.getElementById(MENU_LABEL_ID);
+            var menuLabelText = menuLabel.textContent;
+            var ariaLabelMock = document.getElementById(ARIA_LABEL_MOCK);
+
+            var focusableElements = Container.querySelectorAll(FOCASABLE_ELEMENTS);
+            focusableElements = Array.prototype.slice.call(focusableElements);
+
+            var firstMenuElement = focusableElements[0];
+            var firstAnchorTag = focusableElements[getFirstIndexOfElement(focusableElements, ANCHOR_TAG)];
+            var lastMenuElement = focusableElements[focusableElements.length - 1];
+
+            // handling the keyboard buttons when it is fired on menu button
+            var isMenuOpened = false;
+            if (!isMenuOpened && isMenuKeyTriggered(e)) {
+                isMenuOpened = true;
+                mainContainerMenu.classList.add(CLASS_SHOW);
+                Container.classList.add(CLASS_SHOW);
+                menuButton.setAttribute(ARIA_EXPANDED, true)
+
+                switch (e.keyCode) {
+                    case KEY_BUTTON.UP:
+                        lastMenuElement.focus();
+                        prevent(e);
+                        break;
+                    case KEY_BUTTON.DOWN:
+                    case KEY_BUTTON.SPACE:
+                    case KEY_BUTTON.ENTER:
+                        firstMenuElement.focus();
+                        prevent(e);
+                        break;
+                    case KEY_BUTTON.ESC:
+                        closeMenu();
+                        prevent(e);
+                        break;
+                }
+            }
+
+            // to close the menu in case the mouse clicked outside the menu
+            document.addEventListener(CLICK_FUNCTION, handleMouseClickOutOfMenu);
+
+            // handling the keyboard buttons when it is fired on menu items
+            Container.addEventListener(KEYDOWN_FUNCTION, handleKeydown);
+
+            function handleKeydown(event) {
+                switch (event.keyCode) {
+                    case KEY_BUTTON.TAB:
+                        if (event.shiftKey) {
+                            if (document.activeElement === firstMenuElement) {
+                                lastMenuElement.focus();
+                                prevent(event);
+                            }
+                        } else {
+                            if (document.activeElement === lastMenuElement) {
+                                firstMenuElement.focus();
+                                prevent(event);
+                            }
+                        }
+                        break;
+                    case KEY_BUTTON.DOWN:
+                        if (document.activeElement === lastMenuElement) {
+                            firstAnchorTag.focus();
+                            prevent(event);
+                        }
+                        break;
+                    case KEY_BUTTON.UP:
+                        if (document.activeElement === firstAnchorTag) {
+                            lastMenuElement.focus();
+                            prevent(event);
+                        }
+                        break;
+                    case KEY_BUTTON.HOME:
+                        firstMenuElement.focus();
+                        prevent(event);
+                        break;
+                    case KEY_BUTTON.END:
+                        lastMenuElement.focus();
+                        prevent(event);
+                        break;
+                    case KEY_BUTTON.ENTER:
+                        if (document.activeElement.tagName === ANCHOR_TAG) {
+                            ariaLabelMock.textContent = menuLabelText + " " + document.activeElement.textContent;
+                            menuButton.textContent = document.activeElement.textContent;
+                            document.activeElement.click();
+                            closeMenu();
+                            prevent(event);
+                        }
+                        break;
+                    case KEY_BUTTON.ESC:
+                        closeMenu();
+                        prevent(event);
+                        break;
+                    case KEY_BUTTON.SPACE: // To prevent browser scrol
+                        prevent(event);
+                        break;
+                }
+                if (isPrintableCharacter(event.key) && document.activeElement.tagName === ANCHOR_TAG) {
+                    setFocusByFirstCharacter(focusableElements, document.activeElement, event.key);
+                }
+
+            };
+            // handling closing the menu
+            function closeMenu() {
+                menuButton.setAttribute(ARIA_EXPANDED, false)
+                menuButton.focus();
+                Container.classList.remove(CLASS_SHOW);
+                mainContainerMenu.classList.remove(CLASS_SHOW);
+            }
+
+            // handling the events default behaviour
+            function prevent(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.cancelBubble = true;
+                event.returnValue = false;
+            }
+
+            // handling getting the first item of a specific type (General function)
+            function getFirstIndexOfElement(elementArray, targetedElement) {
+                var indexOfElement;
+                for (var index = 0; index < elementArray.length; index++) {
+                    if (elementArray[index].tagName === targetedElement) {
+                        indexOfElement = index;
+                        break;
+                    }
+                }
+                return indexOfElement;
+            }
+
+            // Returning true only if one of this keys is used over the menu buttons, to avoid triggering the menu with another keys
+            function isMenuKeyTriggered(event) {
+                return (e.keyCode === KEY_BUTTON.UP ||
+                    e.keyCode === KEY_BUTTON.DOWN ||
+                    e.keyCode === KEY_BUTTON.ENTER ||
+                    e.keyCode === KEY_BUTTON.ESC ||
+                    e.keyCode === KEY_BUTTON.SPACE);
+            }
+
+            // to close the menu in case the mouse clicked outside the menu
+            function handleMouseClickOutOfMenu() {
+                var clickedOnMenuElement = 0;
+                focusableElements.forEach(element => {
+                    if (document.activeElement === element) {
+                        clickedOnMenuElement++;
+                    }
+                });
+                if (clickedOnMenuElement === 0) {
+                    closeMenu();
+                    document.removeEventListener(CLICK_FUNCTION, handleMouseClickOutOfMenu);
+                }
+            }
+            // Check if it is a printable Characters
+            function isPrintableCharacter(str) {
+                return str.length === 1 && str.match(/\S/);
+            }
+        }
+
+        // Handling Focus using keyboards Characters
+        function setFocusByFirstCharacter(focusableElements, currentItem, char) {
+            var firstChars = [];
+            var start, index, char = char.toLowerCase();
+
+            var elementTextContent;
+            for (var index = 0; index < focusableElements.length; index++) {
+                elementTextContent = focusableElements[index].textContent.trim();
+                firstChars.push(elementTextContent.substring(0, 1).toLowerCase());
+            }
+
+            // Get start index for search based on position of currentItem
+            start = focusableElements.indexOf(currentItem) + 1;
+            if (start === focusableElements.length) {
+                start = 0;
+            }
+            console.log("Curent Item Index:: " + start)
+                // Check remaining slots in the menu
+            index = getIndexFirstChars(start, char);
+
+            console.log("Curent index:: " + index)
+                // If not found in remaining slots, check from beginning
+            if (index === -1) {
+                index = getIndexFirstChars(0, char);
+            }
+
+            // If match was found...
+            if (index > -1) {
+                focusableElements[index].focus();
+            }
+
+            // function setFocusByFirstCharacter(currentItem, char) { };
+
+            function getIndexFirstChars(startIndex, char) {
+                for (var i = startIndex; i < firstChars.length; i++) {
+                    if (char === firstChars[i]) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+        }
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
