@@ -1,0 +1,97 @@
+<div class="menu-container">
+  <h1>Drop down menu accessibility for Angular/Bootstrap</h1>
+  <button>just to be focued</button>
+  <br />
+  <br />
+  <div class="row">
+    <div class="col">
+      <div id="menuContainer" ngbDropdown class="d-inline-block">
+        <button
+          class="btn btn-outline-primary"
+          id="menuBtn"
+          ngbDropdownToggle
+          aria-controls="menuList"
+          aria-haspopup="true"
+        >
+          Toggle dropdown
+        </button>
+        <div
+          role="menu"
+          id="menuList"
+          ngbDropdownMenu
+          aria-labelledby="menuBtn"
+        >
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Action - 1
+          </a>
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Another Action
+          </a>
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Something else is here
+          </a>
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Action - 4
+          </a>
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Another Action 5
+          </a>
+          <a href="" role="menuitem" class="menuItme" ngbDropdownItem>
+            Something else is here 6
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <hr />
+  <h2>Second Menu Test</h2>
+  <hr />
+  <br />
+  <br />
+  <button>After menu to be focued</button>
+  <br />
+  <br />
+
+  <div class="row">
+    <div class="col">
+      <div id="menuContainer2" ngbDropdown class="d-inline-block">
+        <button
+          class="btn btn-outline-primary"
+          id="menuBtn2"
+          ngbDropdownToggle
+          aria-controls="menuList2"
+          aria-haspopup="true"
+        >
+          Second Menu Toggle dropdown
+        </button>
+        <div
+          role="menu"
+          id="menuList2"
+          ngbDropdownMenu
+          aria-labelledby="menuBtn2"
+        >
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Action - 1
+          </button>
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Another Action
+          </button>
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Something else is here
+          </button>
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Action - 4
+          </button>
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Another Action 5
+          </button>
+          <button role="menuitem" class="menuItme2" ngbDropdownItem>
+            Second Menu Something else is here 6
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
